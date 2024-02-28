@@ -10,23 +10,6 @@ import { Box, Flex } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
-
-  const game = useRef<Game>(new Game());
-  const [playerName, setPlayerName] = useState('player 1');
-
-  const deal = () => {
-    console.log('dealing cards');
-    game.current.dealCards();
-  }
-
-  const playCard = (cardPlay: CardPlay) => {
-    game.current.playCard(cardPlay.player.name, cardPlay.card) 
-  }
-
-  useEffect(() => {
-    console.log('game state change!')
-  }, [game.current])
-
   return (
     <Flex dir={'column'} justifyContent={'space-between'}>
       <Flex gap={4} flexWrap={'wrap'}>
