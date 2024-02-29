@@ -21,6 +21,6 @@ export enum Suit {
 }
 
 export enum SuitColor {
-    Red = "#ff0000",
-    Black = "#000000"
+    Red = "#CC3333",
+    Black = "#111111"
 }

@@ -20,9 +20,18 @@ export default function (game: Game, action: PlayAction) {
         throw new Error(`It is ${game.players[0].name}'s turn, not ${action.player.name}'s.`)
     }
 
+    // make sure trump suit is set
+    if (!game.trumpSuit) {
+        throw new Error(`Trump suit was never selected`)
+    }
+
     // make sure the play is valid
-    if (!isValidPlay(action.card, game.trick.suit)) {
+    if (!isValidPlay(action.card, game.trick.suit, game.trumpSuit)) {
         throw new Error(`Invalid card play! suit: ${JSON.stringify(game.trick.suit)}, card: ${JSON.stringify(action.card)}`)
+    }
+    // if this is the first play, set the trick suit
+    if (game.trick.suit === null) {
+        game.trick.suit = action.card.suit
     }
 
     // add the card to the trick

@@ -10,6 +10,8 @@ export default function switchPhase(game: Game, newPhase: Phase) {
 
 function isValidNextPhase(currentPhase: Phase, nextPhase: Phase) {
     switch (currentPhase) {
+        case Phase.Lobby:
+            return nextPhase === Phase.Shuffle || nextPhase === Phase.Lobby
         case Phase.Play:
             return nextPhase === Phase.CalculateWinner || nextPhase === Phase.Play
         default:

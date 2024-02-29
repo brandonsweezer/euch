@@ -1,11 +1,8 @@
 import { Hand } from "./hand";
+import { Team } from "./team";
 
-export class Player {
-    name: string;
-    hand: Hand;
-
-    constructor({name}: {name: string}) {
-        this.name = name,
-        this.hand = [];
-    }
+export type Player = {
+    name: string,
+    hand: Hand,
+    team: Team,
 }

@@ -1,5 +1,6 @@
 export enum Phase {
     Start,
+    Lobby,
     Shuffle,
     Deal,
     PickOrPass,

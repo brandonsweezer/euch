@@ -1,6 +1,6 @@
 import { shuffleCards } from "@/lib/shuffleCards"
 import { Team } from "./team"
-import { PlayingCard } from "./playingCard"
+import { PlayingCard, Suit } from "./playingCard"
 import { Player } from "./player"
 import { DealCards } from "@/lib/dealCards"
 import { CardPlay, Trick } from "./trick"
@@ -15,4 +15,5 @@ export type Game = {
     phase: Phase,
     deck: PlayingCard[],
     trick: Trick
+    trumpSuit: Suit | null,
 }
