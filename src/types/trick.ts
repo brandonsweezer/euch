@@ -4,7 +4,6 @@ import { PlayingCard, Suit } from "./playingCard"
 export type Trick = {
     plays: CardPlay[]
     suit: Suit | null
-    winner: Player | null
 }
 
 export type CardPlay = {

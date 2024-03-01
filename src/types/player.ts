@@ -1,8 +1,8 @@
-import { Hand } from "./hand";
+import { PlayerHand } from "./playerHand";
 import { Team } from "./team";
 
 export type Player = {
     name: string,
-    hand: Hand,
+    hand: PlayerHand,
     team: Team,
 }

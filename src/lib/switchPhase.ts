@@ -14,6 +14,18 @@ function isValidNextPhase(currentPhase: Phase, nextPhase: Phase) {
             return nextPhase === Phase.Shuffle || nextPhase === Phase.Lobby
         case Phase.Play:
             return nextPhase === Phase.CalculateWinner || nextPhase === Phase.Play
+        case Phase.Shuffle:
+            return nextPhase === Phase.Deal
+        case Phase.Deal:
+            return nextPhase === Phase.PickOrPass
+        case Phase.PickOrPass:
+            return nextPhase === Phase.PickOrPass || nextPhase === Phase.ChooseSuit || nextPhase === Phase.Discard
+        case Phase.Discard:
+            return nextPhase === Phase.Play
+        case Phase.CalculateWinner:
+            return nextPhase === Phase.Play || nextPhase === Phase.UpdateScore
+        case Phase.UpdateScore:
+            return nextPhase === Phase.Shuffle || nextPhase === Phase.End
         default:
             return false;
     }

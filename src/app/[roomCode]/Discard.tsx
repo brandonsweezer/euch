@@ -1,21 +1,25 @@
 import { Game } from "@/types/game"
-import { Button } from "@chakra-ui/react"
+import { PlayingCard } from "@/types/playingCard";
+import { Button, Flex } from "@chakra-ui/react"
 
-export default function Shuffle(
+export default function Discard(
     {   
         game,
         setGame,
         playerName,
+        selectedCard
     }: {
         game: Game,
         setGame: (game: Game) => void,
         playerName: string,
+        selectedCard?: PlayingCard
     }) {
-        const shuffle = () => {
-            fetch(`/api/game/${game._id}/shuffle`, {
+        const discard = () => {
+            fetch(`/api/game/${game._id}/discard`, {
                 method: 'POST',
                 body: JSON.stringify({
-                    playerName
+                    player: game.hand?.dealer,
+                    card: selectedCard
                 })
             }).then(async (res) => {
                 if (res.status === 200) {
@@ -25,7 +29,7 @@ export default function Shuffle(
             }).catch(console.error);
         }
 
-    return (<>
-        <Button onClick={shuffle}>Shuffle</Button>
-    </>)
+    return (<Flex mx={'auto'}>
+        <Button size={'lg'} onClick={discard} disabled={!selectedCard}>Discard</Button>
+    </Flex>)
 }

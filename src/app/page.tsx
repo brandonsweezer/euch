@@ -19,7 +19,7 @@ export default function Home() {
     }).then(async (res) => {
       const newGame: Game = await res.json();
       router.push(newGame._id)
-    }).catch(console.log)
+    }).catch(console.error)
   }
 
   return (

@@ -1,0 +1,1 @@
+export type CalculateWinnerAction = { playerName: string };

@@ -1,7 +1,7 @@
 import { Game } from "@/types/game"
 import { Button } from "@chakra-ui/react"
 
-export default function Shuffle(
+export default function Deal(
     {   
         game,
         setGame,
@@ -11,11 +11,11 @@ export default function Shuffle(
         setGame: (game: Game) => void,
         playerName: string,
     }) {
-        const shuffle = () => {
-            fetch(`/api/game/${game._id}/shuffle`, {
+        const deal = () => {
+            fetch(`/api/game/${game._id}/deal`, {
                 method: 'POST',
                 body: JSON.stringify({
-                    playerName
+                    dealer: playerName
                 })
             }).then(async (res) => {
                 if (res.status === 200) {
@@ -26,6 +26,6 @@ export default function Shuffle(
         }
 
     return (<>
-        <Button onClick={shuffle}>Shuffle</Button>
+        <Button onClick={deal}>Deal</Button>
     </>)
 }

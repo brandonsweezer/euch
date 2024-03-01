@@ -3,6 +3,7 @@ import { Game } from "@/types/game"
 import { Phase } from "@/types/phase"
 import isValidPlay from "../isValidPlay"
 import switchPhase from "../switchPhase"
+import handWithoutCard from "../handWithoutCard"
 
 export default function (game: Game, action: PlayAction) {
     if (game.phase !== Phase.Play) throw new Error(`Tried to take a Play action during ${game.phase} phase.`)
@@ -16,17 +17,22 @@ export default function (game: Game, action: PlayAction) {
 
     // make sure it is the players turn
     // the current player's turn is always game.players[0]
-    if (game.players[0] !== action.player) {
+    if (game.players[0].name !== action.player.name) {
         throw new Error(`It is ${game.players[0].name}'s turn, not ${action.player.name}'s.`)
     }
 
+    // make sure there is an established hand
+    if (!game.hand) {
+        throw new Error(`Hand was not established`)
+    }
+
     // make sure trump suit is set
-    if (!game.trumpSuit) {
+    if (!game.hand.trumpSuit) {
         throw new Error(`Trump suit was never selected`)
     }
 
     // make sure the play is valid
-    if (!isValidPlay(action.card, game.trick.suit, game.trumpSuit)) {
+    if (!isValidPlay(action.card, game.trick.suit, game.hand.trumpSuit, action.player.hand)) {
         throw new Error(`Invalid card play! suit: ${JSON.stringify(game.trick.suit)}, card: ${JSON.stringify(action.card)}`)
     }
     // if this is the first play, set the trick suit
@@ -39,7 +45,7 @@ export default function (game: Game, action: PlayAction) {
     // remove the card from the players hand
     game.players = game.players.map((player) => {
         if (player.name === action.player.name) {
-            player.hand = player.hand.filter((card) => card !== action.card)
+            player.hand = handWithoutCard(action.card, player.hand)
         }
         return player;
     })
