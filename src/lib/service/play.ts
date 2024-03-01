@@ -5,7 +5,7 @@ import isValidPlay from "../isValidPlay"
 import switchPhase from "../switchPhase"
 import handWithoutCard from "../handWithoutCard"
 
-export default function (game: Game, action: PlayAction) {
+export default function play(game: Game, action: PlayAction) {
     if (game.phase !== Phase.Play) throw new Error(`Tried to take a Play action during ${game.phase} phase.`)
     
     // make sure player hasn't played yet.

@@ -3,7 +3,7 @@ import { Phase } from "@/types/phase"
 import switchPhase from "../switchPhase"
 import { ChooseSuitAction } from "@/types/actions/chooseSuit"
 
-export default function (game: Game, action: ChooseSuitAction) {
+export default function chooseSuit(game: Game, action: ChooseSuitAction) {
     if (game.phase !== Phase.ChooseSuit) throw new Error(`Tried to take a ChooseSuit action during ${game.phase} phase.`)
     
     if (!game.hand) throw new Error('Hand not established!')

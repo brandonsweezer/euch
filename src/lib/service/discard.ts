@@ -4,7 +4,7 @@ import { DiscardAction } from "@/types/actions/discard"
 import switchPhase from "../switchPhase"
 import handWithoutCard from "../handWithoutCard"
 
-export default function (game: Game, action: DiscardAction) {
+export default function discard(game: Game, action: DiscardAction) {
     if (game.phase !== Phase.Discard) throw new Error(`Tried to take a Discard action during ${game.phase} phase.`)
 
     if (!game.hand) {

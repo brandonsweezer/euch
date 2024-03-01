@@ -56,6 +56,7 @@ export default function ChooseSuit(
                 <Flex gap={2}>
                     {Object.keys(Suit).map((suit) => (
                         <Stack 
+                            key={suit}
                             onClick={() => chooseSuit(Suit[suit as keyof typeof Suit])}
                             textAlign={'center'}
                             backgroundColor={"#CCCCCC"}

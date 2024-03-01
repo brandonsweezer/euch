@@ -32,7 +32,7 @@ export default function Home() {
       height={'100%'}
       backgroundColor={"#101010"}
       >
-      <Text>Let's play some Euchre!</Text>
+      <Text>{`Let's play some Euchre!`}</Text>
       <Stack justifyContent={'space-between'} backgroundColor={'#303040'} borderRadius={8} py={'10%'}>
         <Flex justifyContent={'space-around'}>
           <Text color={SuitColor.Black}>{Suit.Spades}</Text>

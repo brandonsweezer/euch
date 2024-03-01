@@ -4,7 +4,7 @@ import switchPhase from "../switchPhase"
 import { dealCards } from "../dealCards"
 import { DealAction } from "@/types/actions/deal"
 
-export default function (game: Game, action: DealAction) {
+export default function deal(game: Game, action: DealAction) {
     if (game.phase !== Phase.Deal) throw new Error(`Tried to take a Deal action during ${game.phase} phase.`)
 
     // dealer is whoevers current turn it is.

@@ -4,7 +4,7 @@ import { Phase } from "@/types/phase"
 import switchPhase from "../switchPhase";
 import { Team } from "@/types/team";
 
-export default function (game: Game, action: StartGameAction) {
+export default function startGame(game: Game, action: StartGameAction) {
     if (game.phase !== Phase.Lobby) throw new Error(`Tried to start game during ${game.phase} phase.`)
 
 

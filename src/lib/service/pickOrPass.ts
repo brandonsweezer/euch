@@ -3,7 +3,7 @@ import { Phase } from "@/types/phase"
 import switchPhase from "../switchPhase"
 import { PickOrPass, PickOrPassAction } from "@/types/actions/pickOrPass"
 
-export default function (game: Game, action: PickOrPassAction) {
+export default function pickOrPass(game: Game, action: PickOrPassAction) {
     if (game.phase !== Phase.PickOrPass) throw new Error(`Tried to take a PickOrPass action during ${game.phase} phase.`)
 
     // check number of players
