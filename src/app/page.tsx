@@ -22,6 +22,13 @@ export default function Home() {
     }).catch(console.error)
   }
 
+  useEffect(() => {
+    const colorMode = localStorage.getItem("chakra-ui-color-mode")
+    if (!colorMode || colorMode === 'light') {
+      localStorage.setItem("chakra-ui-color-mode", "dark");
+    }
+  }, [])
+
   return (
     <Stack 
       mx={'10%'}

@@ -120,6 +120,13 @@ export default function RoomCode() {
     }
 
     useEffect(() => {
+        const colorMode = localStorage.getItem("chakra-ui-color-mode")
+        if (!colorMode || colorMode === 'light') {
+          localStorage.setItem("chakra-ui-color-mode", "dark");
+        }
+      }, [])
+
+    useEffect(() => {
         if (!fetchingGame.current) {
             fetchingGame.current = true;
             fetch(`/api/game/${params.roomCode}`, { method: 'GET' }).then(async (res) => {
