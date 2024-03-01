@@ -1,6 +1,6 @@
 import { getTrickWinner } from "@/lib/compareCards";
 import { Game } from "@/types/game"
-import { Button, Flex, Stack, Text } from "@chakra-ui/react"
+import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react"
 import PlayingCard from "./PlayingCard";
 
 export default function CalculateWinner(
@@ -31,9 +31,12 @@ export default function CalculateWinner(
     return (
         <Stack mx={'auto'}>
             {winner && 
-                <Stack>
-                    <Text>Winning Team: {JSON.stringify(winner.player.team)}</Text>
-                    {winner && <PlayingCard card={winner.card} faceUp />}
+                <Stack textAlign={'center'}>
+                    <Text>{winner.player.name} won!</Text>
+                    <Text>+1 trick for {winner.player.team} team</Text>
+                    <Box mx={'auto'}>
+                        <PlayingCard card={winner.card} faceUp />
+                    </Box>
                 </Stack>
             }
             <Button onClick={nextTrick}>Next Trick</Button>

@@ -1,5 +1,5 @@
 import { Game } from "@/types/game"
-import { Button } from "@chakra-ui/react"
+import { Button, Flex } from "@chakra-ui/react"
 
 export default function Deal(
     {   
@@ -25,7 +25,9 @@ export default function Deal(
             }).catch(console.error);
         }
 
-    return (<>
-        <Button onClick={deal}>Deal</Button>
-    </>)
+        const notMyTurn = !game.players.length || game.players[0].name !== playerName
+
+    return (<Flex mx={'auto'}>
+        <Button isDisabled={notMyTurn} onClick={deal}>Deal</Button>
+    </Flex>)
 }

@@ -20,6 +20,8 @@ function isValidNextPhase(currentPhase: Phase, nextPhase: Phase) {
             return nextPhase === Phase.PickOrPass
         case Phase.PickOrPass:
             return nextPhase === Phase.PickOrPass || nextPhase === Phase.ChooseSuit || nextPhase === Phase.Discard
+        case Phase.ChooseSuit:
+            return nextPhase === Phase.Play || nextPhase === Phase.ChooseSuit
         case Phase.Discard:
             return nextPhase === Phase.Play
         case Phase.CalculateWinner:

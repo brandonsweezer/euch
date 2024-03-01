@@ -6,26 +6,26 @@ import { shuffleCards } from "./shuffleCards";
 
 export default function createBlankGameRequest(): NewGameRequest {
     const players: Player[] = [
-        {
-            name: 'player1',
-            team: Team.Red,
-            hand: []
-        },
-        {
-            name: 'player2',
-            team: Team.Black,
-            hand: []
-        },
-        {
-            name: 'player3',
-            team: Team.Red,
-            hand: []
-        },
-        {
-            name: 'player4',
-            team: Team.Black,
-            hand: []
-        },
+        // {
+        //     name: 'player1',
+        //     team: Team.Red,
+        //     hand: []
+        // },
+        // {
+        //     name: 'player2',
+        //     team: Team.Black,
+        //     hand: []
+        // },
+        // {
+        //     name: 'player3',
+        //     team: Team.Red,
+        //     hand: []
+        // },
+        // {
+        //     name: 'player4',
+        //     team: Team.Black,
+        //     hand: []
+        // },
     ]
     const request: NewGameRequest = {
         players,

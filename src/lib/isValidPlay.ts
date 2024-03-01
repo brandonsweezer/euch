@@ -1,5 +1,6 @@
 import { PlayingCard, Rank, Suit } from "@/types/playingCard";
 import { getSuitColor } from "./getSuitColor";
+import getLeftSuit from "./getLeftSuit";
 
 export default function isValidPlay(card: PlayingCard, suit: Suit | null, trumpSuit: Suit, restOfHand: PlayingCard[]) {
     if (matchesSuit(card, suit, trumpSuit)) {
@@ -25,11 +26,11 @@ function matchesSuit(card: PlayingCard, suit: Suit | null, trumpSuit: Suit) {
     if (card.suit === suit) {
         return true;
     }
-    if (card.rank === Rank.Jack) {
-        const cardSuitColor = card.color;
-        const trumpSuitColor = getSuitColor(trumpSuit);
-        if (cardSuitColor ===  trumpSuitColor) {
-            return true;
+    if (suit === trumpSuit) { // left jack IS the trump suit
+        if (card.rank === Rank.Jack) {
+            if (card.suit === getLeftSuit(trumpSuit)) {
+                return true;
+            }
         }
     }
     return false;

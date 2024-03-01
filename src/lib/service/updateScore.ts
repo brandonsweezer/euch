@@ -14,9 +14,9 @@ export default function updateScore(game: Game, action: UpdateScoreAction) {
     // update game score
     const { points, winningTeam } = getPointsScored(game.hand);
     game.score[winningTeam] = game.score[winningTeam] + points;
-    // change dealer to next in line
+    // put dealer at the end of the turn order
     const dealerName = game.hand.dealer.name
-    while (game.players[0].name !== dealerName) {
+    while (game.players[3].name !== dealerName) {
         const p = game.players.shift();
         if (!p) throw new Error('players array empty');
         game.players.push(p);

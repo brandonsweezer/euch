@@ -2,7 +2,7 @@
 import { Game } from "@/types/game";
 import { Phase } from "@/types/phase";
 import { Spinner, Stack, Text } from "@chakra-ui/react";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Lobby from "./Lobby";
 import Shuffle from "./Shuffle";
@@ -14,12 +14,23 @@ import Discard from "./Discard";
 import Play from "./Play";
 import CalculateWinner from "./CalculateWinner";
 import UpdateScore from "./UpdateScore";
+import Pusher from 'pusher-js';
+import { NotificationType } from "@/types/notification";
+import ChooseSuit from "./ChooseSuit";
+import End from "./End";
+
+const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_APP_KEY ?? '', {
+    cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER ?? '',
+    forceTLS: true
+});
 
 export default function RoomCode() {
     const params = useParams();
     const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const router = useRouter();
     const [gameState, setGameState] = useState<Game | undefined>();
-    const [playerName, setPlayerName] = useState(searchParams.get('player') ?? 'player1')
+    const [playerName, setPlayerName] = useState(searchParams.get('player') ?? '')
     const fetchingGame = useRef<boolean>(false);
 
     const [selectedCard, setSelectedCard] = useState<PlayingCard>();
@@ -30,6 +41,13 @@ export default function RoomCode() {
     useEffect(() => {
         setSelectedCard(undefined);
     }, [gameState])
+
+    useEffect(() => {
+        const newParams = new URLSearchParams(searchParams);
+        newParams.set('player', playerName);
+        const url = `${pathname}?${newParams}`
+        router.replace(url);
+    }, [playerName])
 
     const getPhaseDisplay = () => {
         switch(gameState?.phase) {
@@ -51,6 +69,12 @@ export default function RoomCode() {
                 return (
                     <GameplayView game={gameState} playerName={playerName} selectCard={selectCard} selectedCard={selectedCard}>
                         <PickOrPass game={gameState} setGame={(game: Game) => setGameState(game)} playerName={playerName} />
+                    </GameplayView>
+                )
+            case Phase.ChooseSuit:
+                return (
+                    <GameplayView game={gameState} playerName={playerName} selectCard={selectCard} selectedCard={selectedCard}>
+                        <ChooseSuit game={gameState} setGame={(game: Game) => setGameState(game)} playerName={playerName} />
                     </GameplayView>
                 )
             case Phase.Discard:
@@ -81,6 +105,12 @@ export default function RoomCode() {
                         <UpdateScore game={gameState} setGame={(game: Game) => setGameState(game)} playerName={playerName} />
                     </GameplayView>
                 )
+            case Phase.End:
+                return (
+                    <GameplayView game={gameState} playerName={playerName} selectCard={selectCard} selectedCard={selectedCard}>
+                        <End game={gameState} setGame={(game: Game) => setGameState(game)} playerName={playerName} />
+                    </GameplayView>
+                )
             default:
                 return (
                     gameState ? <GameplayView game={gameState} playerName={playerName} selectCard={selectCard} selectedCard={selectedCard}>{JSON.stringify(gameState)}</GameplayView>
@@ -99,6 +129,18 @@ export default function RoomCode() {
             }).catch(console.error)
         }
     }, [])
+
+    useEffect(function () {
+        const channel = pusher.subscribe(`${params.roomCode}`);
+
+        channel.bind(NotificationType.GameStateChange, function (data: Game) {
+            setGameState(data);
+        });
+
+        return () => {
+            pusher.unsubscribe(`${params.roomCode}`);
+        };
+    }, []);
 
     return (
         <>

@@ -48,7 +48,7 @@ export default function (game: Game, action: PickOrPassAction) {
         switchPhase(game, Phase.Discard)
     } else { // pass
         // if we ARE on the dealer, go to choose suit phase
-        if (game.players[0] === game.hand.dealer) {
+        if (game.players[0].name === game.hand.dealer.name) {
             switchPhase(game, Phase.ChooseSuit);
         }
         // either way, go to next player.

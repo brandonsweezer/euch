@@ -21,6 +21,8 @@ import { CalculateWinnerAction } from "@/types/actions/calcWinner";
 import calcWinner from "./calcWinner";
 import { UpdateScoreAction } from "@/types/actions/updateScore";
 import updateScore from "./updateScore";
+import { ChooseSuitAction } from "@/types/actions/chooseSuit";
+import chooseSuit from "./chooseSuit";
 
 export const gameService = function (gameId: string) {
     return {
@@ -67,6 +69,12 @@ export const gameService = function (gameId: string) {
         pickOrPass: async function (action: PickOrPassAction) {
             const game = await this.getGame();
             const newGameState = pickOrPass(game, action);
+            const updatedGameState = await this.updateGameInDatabase(newGameState);
+            return updatedGameState;
+        },
+        chooseSuit: async function (action: ChooseSuitAction) {
+            const game = await this.getGame();
+            const newGameState = chooseSuit(game, action);
             const updatedGameState = await this.updateGameInDatabase(newGameState);
             return updatedGameState;
         },

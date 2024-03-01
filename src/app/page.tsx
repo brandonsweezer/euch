@@ -18,7 +18,7 @@ export default function Home() {
       body: JSON.stringify(createBlankGameRequest())
     }).then(async (res) => {
       const newGame: Game = await res.json();
-      router.push(newGame._id)
+      router.push(`${newGame._id}?host=true`)
     }).catch(console.error)
   }
 

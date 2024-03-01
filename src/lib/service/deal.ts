@@ -7,13 +7,13 @@ import { DealAction } from "@/types/actions/deal"
 export default function (game: Game, action: DealAction) {
     if (game.phase !== Phase.Deal) throw new Error(`Tried to take a Deal action during ${game.phase} phase.`)
 
-    // make sure dealer name is in players
-    const dealer = game.players.find(p => p.name === action.dealer)
+    // dealer is whoevers current turn it is.
+    const dealer = game.players[0]
     if (!dealer) {
         throw new Error(`Player with name ${action.dealer} does not exist! Cannot deal cards.`)
     }
 
-    // create hand
+    // create hand (to set dealer)
     game.hand = {
         dealer,
         trumpSuit: null,

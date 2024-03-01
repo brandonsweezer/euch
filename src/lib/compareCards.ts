@@ -1,11 +1,21 @@
 import { PlayingCard, Rank, Suit } from "@/types/playingCard";
 import { CardPlay, Trick } from "@/types/trick";
 import { getSuitColor } from "./getSuitColor";
+import getLeftSuit from "./getLeftSuit";
 
 export function getTrickWinner(trick: Trick, trumpSuit: Suit) {
     // it's either the highest rank card of trump suit
     // or the highest rank card of trick suit
-    const sortedByRank = trick.plays.sort((b, a) => compareRanks(a.card.rank, b.card.rank))
+    const sortedByRank = trick.plays.sort((a, b) => compareRanks(a.card.rank, b.card.rank))
+    // find left and right, if they exist one of them wins.
+    const left = sortedByRank.find((cardPlay) => cardPlay.card.rank === Rank.Jack && cardPlay.card.suit === getLeftSuit(trumpSuit))
+    const right = sortedByRank.find((cardPlay) => cardPlay.card.rank === Rank.Jack && cardPlay.card.suit === trumpSuit)
+    if (right) {
+        return right
+    }
+    if (left) {
+        return left
+    }
 
     let highestOfTrickSuit: CardPlay | undefined = undefined;
     for (let cardPlay of sortedByRank) {
@@ -33,12 +43,12 @@ export function isTrumpSuit(card: PlayingCard, trumpSuit: Suit) {
 
 export function compareRanks(rank1: Rank, rank2: Rank) {
     const rankOrder = {
-        [Rank.Nine]: 0,
-        [Rank.Ten]: 1,
-        [Rank.Jack]: 2,
-        [Rank.Queen]: 3,
-        [Rank.King]: 4,
-        [Rank.Ace]: 5,
+        [Rank.Nine]: 5,
+        [Rank.Ten]: 4,
+        [Rank.Jack]: 3,
+        [Rank.Queen]: 2,
+        [Rank.King]: 1,
+        [Rank.Ace]: 0,
     }
 
     if (rankOrder[rank1] < rankOrder[rank2]) {
